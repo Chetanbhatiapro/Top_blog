@@ -65,7 +65,6 @@ class Article extends React.Component {
   render() {
     const { user, editArticle } = this.props;
     // console.log(user && user.user.username, "user");
-    // console.log(data && data.article.title)
 
     return (
       <>
@@ -123,7 +122,7 @@ class Article extends React.Component {
                           </Link>
                           <span className="article-publish-info">
                             {/* Add article publish date and tiem */}
-                            {this.state.article && this.state.article.createdAt}
+                            {this.state.article ? new Date(this.state.article.createdAt).toUTCString() : null}
                           </span>
                         </div>
                       </div>
@@ -165,7 +164,7 @@ class Article extends React.Component {
               {/* Article description */}
               <div className="article-description-container">
                 <p className="article-description">
-                  {this.state.article && this.state.article.description}
+                  {this.state.article && this.state.article.body}
                 </p>
                 {/* Comments form */}
                 <CommentsForm
@@ -239,6 +238,9 @@ const Div = styled.div`
     font-size: .7rem;
   }
 
+  .article-option-container {
+    margin-bottom: 10px;
+  }
   // Buttons
   .article-btn {
     font-size: .8rem;

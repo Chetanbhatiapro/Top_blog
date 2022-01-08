@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 
-function Pagination({ handleNavPage, currentPage }) {
+function Pagination({ handleNavPage, currentPage, articlesCount }) {
   // Create a array of 50 elements
-  let numbers = Array(50);
-  //   Filling the array with integer 1
+  const pages = Math.ceil(Math.abs(articlesCount / 10)) ;
+  let numbers = Array(pages);
+  // //   Filling the array with integer 1
   numbers = numbers.fill(1);
 
   return (

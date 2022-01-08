@@ -86,7 +86,18 @@ class App extends React.Component {
             render={() => <Login fetchUser={this.fetchUser} />}
           />
           <Route
-            path="/editor"
+            path="/article/:slug/edit"
+            render={() => (
+              <ArticleEditor
+                data={this.state.currentArticle}
+                user={this.state.user}
+                // For Header
+                handlelogOut={this.handlelogOut}
+              />
+            )}
+          />
+           <Route
+            path="/article/create"
             render={() => (
               <ArticleEditor
                 data={this.state.currentArticle}
@@ -110,7 +121,7 @@ class App extends React.Component {
                 />
               );
             }}
-          />
+          /> 
         </Switch>
       );
     } else {
@@ -191,39 +202,13 @@ class App extends React.Component {
   };
 
   /**
-   * Make get article request and change the state
-   * @param {string}
-   * @return {undefined}
-   */
-  // getArticle = slug => {
-  //   // console.log(slug, "This is a slug");
-  //   // TEmp
-  //   // slug = "hello-world-article-vc7j70";
-  //   fetch(`https://conduit.productionready.io/api/articles/${slug}`, {
-  //     // headers: {
-  //     //   Authorization: token
-  //     // }
-  //   })
-  //     .then(res => res.json())
-  //     .then(article => {
-  //       // token = token.split(' ')[1];
-  //       // localStorage.setItem('authToken', JSON.stringify(token));
-  //       this.setState({
-  //         currentArticle: article
-  //       });
-  //       // , () => console.log(this.state.currentArticle, 'Current Article')
-  //     })
-  //     .catch(err => console.error(err));
-  // };
-
-  /**
    * Makes the article delete request
    * @param {string}
    * @return {undefined}
    */
-  editArticle = () => {
+  editArticle = (slug) => {
     // console.log("Got edit req.");
-    this.props.history.push("/editor");
+    this.props.history.push(`/article/${slug}/edit`);
   };
 
   // Open user profile

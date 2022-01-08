@@ -163,11 +163,11 @@ export default class MainPage extends Component {
   };
 
   render() {
-    // console.log(this.props, "MainPage props");
+    const username = this.props.user ? this.props.user.user ? this.props.user.user.username : "" : "";
     return (
       <>
         <Header
-          username={this.props.user && this.props.user.user.username}
+          username={username}
           handlelogOut={this.props.handlelogOut}
         />
         <main className="main-container">
@@ -295,8 +295,9 @@ export default class MainPage extends Component {
           </section>
           <section className="pagination-footer-section">
             {/* Pagination/Navigation */}
-            {this.state.data && this.state.data.articles.length > 0 && (
+            {this.state.data && this.state.data.articlesCount && this.state.data.articlesCount > 10 && (
               <Pagination
+                articlesCount={this.state.data.articlesCount}
                 handleNavPage={this.handleNavPage}
                 currentPage={this.state.currentPage}
               />

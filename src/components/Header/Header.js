@@ -34,7 +34,7 @@ export default function Header({ username, handlelogOut }) {
                     activeClassName="active"
                     className="link-item"
                     exact
-                    to="/editor"
+                    to="/article/create"
                   >
                     New Post
                   </NavLink>
