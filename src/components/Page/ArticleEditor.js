@@ -10,34 +10,48 @@ class ArticleEditor extends Component {
       title: "",
       description: "",
       body: "",
-      tagInput: [],
+      tagList: "",
       slug: "",
       isEdit: false
     };
   }
 
   componentDidMount() {
-    // console.log(next.data.article, "next");
-    if (this.props.data) {
-      const {
-        title,
-        description,
-        body,
-        tagInput,
-        slug
-      } = this.props.data.article;
-
-      // Update the state based on props
-      this.setState({
-        title,
-        description,
-        body,
-        tagInput,
-        slug,
-        isEdit: true
-      });
+    const slug = this.props.match.params.slug;
+    if(slug) {
+      this.getArticle(slug);
     }
   }
+
+    /**
+   * Make get article request and change the state
+   * @param {string}
+   * @return {undefined}
+   */
+     getArticle = slug => {
+      fetch(`https://conduit.productionready.io/api/articles/${slug}`, {
+      })
+        .then(res => res.json())
+        .then(data => {
+        const {
+          title,
+          description,
+          body,
+          tagList,
+          } = data.article;
+  
+          // Update the state based on props
+          this.setState({
+            title,
+            description,
+            body,
+            tagList: tagList.join(","),
+            slug,
+            isEdit: true
+          });
+        })
+        .catch(err => console.error(err));
+    };
 
   /**
    * Update the state based on user inputs
@@ -65,11 +79,12 @@ class ArticleEditor extends Component {
     // Modify the token
     token = `Token ${token}`;
     // Define article
+    const tags = this.state.tagList.split(",")
     let article = {
       title: this.state.title,
       description: this.state.description,
       body: this.state.body,
-      tagList: this.state.tagList
+      tagList: this.state.tagList ? tags : ""
     };
 
     // Define the url and currentMethod
@@ -109,7 +124,6 @@ class ArticleEditor extends Component {
   };
 
   render() {
-    // console.log(this.props.user, "props");
     return (
       <>
         <Header
