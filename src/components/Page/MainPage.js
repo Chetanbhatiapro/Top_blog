@@ -14,6 +14,8 @@ export default class MainPage extends Component {
       data: null,
       activeTab: "global-feed",
       currentPage: 0,
+      offset: 0,
+      limit: 10, // Default limit
       isLoading: true
     };
   }
@@ -61,6 +63,8 @@ export default class MainPage extends Component {
     // console.log(tag, "Passed tag");
 
     // Checks that activeTab isn't one from your-feed or global feed
+    const limit = this.state.limit;
+    const offset = this.state.offset;
     if (
       this.state.activeTab !== "your-feed" &&
       this.state.activeTab !== "global-feed"
@@ -68,7 +72,7 @@ export default class MainPage extends Component {
       // Check if user is logged in
       if (this.props.user) {
         fetch(
-          `https://conduit.productionready.io/api/articles?tag=${tag}&limit=10&offset=0`,
+          `https://conduit.productionready.io/api/articles?tag=${tag}&limit=${limit}&offset=${offset}`,
           {
             headers: {
               Authorization: token
@@ -80,7 +84,7 @@ export default class MainPage extends Component {
       } else {
         // Runs if there is no user
         fetch(
-          `https://conduit.productionready.io/api/articles?tag=${tag}&limit=10&offset=0`
+          `https://conduit.productionready.io/api/articles?tag=${tag}&limit=${limit}&offset=${offset}`
         )
           .then(res => res.json())
           .then(data => this.setState({ data, isLoading: false }));
@@ -89,8 +93,7 @@ export default class MainPage extends Component {
     // Check if activeTab is your-feed
     else if (this.state.activeTab === "your-feed") {
       fetch(
-        `https://conduit.productionready.io/api/articles/feed?limit=10&offset=${this
-          .state.currentPage * 10}`,
+        `https://conduit.productionready.io/api/articles/feed?limit=${limit}&offset=${offset}`,
         {
           headers: {
             Authorization: token
@@ -103,8 +106,7 @@ export default class MainPage extends Component {
     // Check if your acitveTab has global-feed and user is logged in
     else if (this.state.activeTab === "global-feed" && this.props.user) {
       fetch(
-        `https://conduit.productionready.io/api/articles?limit=10&offset=${this
-          .state.currentPage * 10}`,
+        `https://conduit.productionready.io/api/articles?limit=${limit}&offset=${offset}`,
         {
           headers: {
             Authorization: token
@@ -117,8 +119,7 @@ export default class MainPage extends Component {
     // Runs if there's no user logged in and acitveTab is your-tab
     else {
       fetch(
-        `https://conduit.productionready.io/api/articles?limit=10&offset=${this
-          .state.currentPage * 10}`
+        `https://conduit.productionready.io/api/articles?limit=${limit}&offset=${offset}`
       )
         .then(res => res.json())
         .then(data => this.setState({ data, isLoading: false }));
@@ -131,7 +132,21 @@ export default class MainPage extends Component {
    * @return {undefined}
    */
   handleNavPage = e => {
-    this.setState({ currentPage: e.target.innerHTML }, () =>
+    let requestedPage = parseInt(e.target.textContent);
+    const currentLimit = this.state.limit;
+    const currentPage = this.state.currentPage ? this.state.currentPage : 1;
+    let requestedOffset;
+    if(requestedPage > currentPage) {
+      requestedOffset = ((currentPage + 1) - 1) * currentLimit;
+    } else {
+      requestedOffset = ((currentPage - 1) - 1) * currentLimit;
+    }
+
+    if(requestedPage === 1) {
+      // Set to zero as initial was 0 for 1
+      requestedPage = 0;
+    }
+    this.setState({ currentPage: requestedPage, offset: requestedOffset }, () =>
       this.fetchArticles()
     );
   };
