@@ -1,7 +1,8 @@
 ## Top Blog
 
-This app is a blog app that aims to provide fully functional blogging functionality to people. This app is build for enhancement and reachability of the blogs.
+This app is a blog app that aims to provide fully functional blogging functionality to people. This app is built for enhancement and reachability of the blogs.
 
+Note: this repo is fork of another owned account.
 
 ### Snapshots
 
