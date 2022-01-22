@@ -4,6 +4,7 @@ import Header from "./../Header/Header";
 // import CommentsForm from './../CommentsForm';
 import "../../App.scss";
 import styled from "styled-components";
+import user_avatar from "../../assets/image/user_avatar.png"
 import Feed from "../Feed";
 import api from "../../api";
 
@@ -23,69 +24,25 @@ class Profile extends Component {
     const username = this.props.match.params.username;
     this.getUserProfile(username);
     // if (this.props.data) {
-    // console.log(username, "Comp, username");
     this.fetchArticles(username);
   }
-
-  // static getDerivedStateFromProps(next, prevState) {
-  // if (next && next.userProfile) {
-  //   console.log("Next profile");
-  //   return {
-  //     user: next.userProfile.profile
-  //   };
-  // } else if (next && next.data.user) {
-  //   console.log("Set state user, From profile");
-  //   return {
-  //     user: next.data.user
-  //   };
-  // }
-
-  // This method is deprecated and replaced to above one
-  // componentWillReceiveProps(next, prev) {
-  //   if (next && next.data.user) {
-  //     this.setState(
-  //       {
-  //         user: next.data.user
-  //       },
-  //       () => this.fetchArticles()
-  //     );
-  //   } else if (next && next.userProfile) {
-  //     console.log("Next profile");
-  //     this.setState(
-  //       {
-  //         user: next.userProfile
-  //       },
-  //       () => console.log(this.state.user, "User from profile")
-  //     );
-  //   }
-  // this.fetchArticles();
-  // console.log(next.data.user.username, 'Component will receive props')
-  // }
 
   fetchArticles = username => {
     // TODO: add author name for following data
     // Make this fetch if active is my-
 
-    // Exract the username from the user props
-    // TESTING Purpose
     if (this.state.user) {
       username = this.state.user.profile.username;
-      // console.log("Updated username");
     }
-    // let { username } = this.state.user.profile;
-    // console.log(username, "username");
-    // username = 'glory232';
     // Set url on active state
     let url = null;
     if (this.state.active === "my-articles") {
-      // console.log('Url 1st')
       url = `${api}/articles?author=${username}&limit=5&offset=0`;
     } else {
-      // console.log('Url 2nd')
       url = `${api}/articles?favorited=${username}&limit=5&offset=0`;
     }
 
-    //
+
     let token = JSON.parse(localStorage.getItem("authToken"));
     // Get the toke from localStorage
     token = `Token ${token}`;
@@ -128,9 +85,6 @@ class Profile extends Component {
   };
 
   getUserProfile = username => {
-    // console.log(username, "Username from function");
-    // TEmp
-    // slug = "hello-world-article-vc7j70";
     fetch(`${api}/profiles/${username}`)
       .then(res => res.json())
       .then(user => {
@@ -138,17 +92,13 @@ class Profile extends Component {
         // localStorage.setItem('authToken', JSON.stringify(token));
         // let { profile } = user;
         this.setState({ user });
-        // , () => console.log(this.state.currentArticle, 'Current Article')
       })
       .catch(err => console.error(err));
   };
 
   render() {
-    // console.log(this.props.match.params.username, "Got username");
     // Define the username
     // const username = this.props !== null ? this.props.user.user.username : 'author';
-    // console.log('render')
-    // console.log(this.props, "Profile props");
 
     return (
       <>
@@ -167,24 +117,21 @@ class Profile extends Component {
                     src={
                       // this.props.data
                       this.state.user
-                        ? // ? this.props.data.user.image
+                        ? 
                           this.state.user.profile.image
-                        : "https://static.productionready.io/images/smiley-cyrus.jpg"
+                        : user_avatar
                     }
                     alt="author"
                     className="user-profile-image"
                   />
                 </div>
                 <span className="user-name">
-                  {/* {this.props.data && this.props.data.user.username} */}
                   {this.state.user && this.state.user.profile.username}
                 </span>
                 <p className="user-bio">
-                  {/* {this.props.data && this.props.data.user.bio} */}
                   {this.state.user && this.state.user.profile.bio}
                 </p>
               </div>
-              {/* TODO: Add settings link button */}
               {this.props.data &&
                 this.state.user &&
                 this.props.data.user.username ===
@@ -203,7 +150,6 @@ class Profile extends Component {
                   </div>
                 )}
             </div>
-            {/*  */}
             {/* Add two buttons to change the feed and also refactor the feed component for the props */}
             <div className="user-article-btn-container wrappup">
               <button

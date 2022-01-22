@@ -21,7 +21,6 @@ export default class GlobalFeed extends Component {
   handleClick = e => {
     if (e.target.className === "tag-btn") {
       const target = e.target.innerText;
-      console.log(target);
       // FetchArticles
       this.props.handleTab(e, target);
     }

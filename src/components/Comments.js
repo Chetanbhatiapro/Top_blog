@@ -14,7 +14,6 @@ class Comments extends Component {
   }
 
   componentWillReceiveProps(next, prev) {
-    // console.log(next, "NExt");
     this.fetchComments(next.slug);
   }
 
@@ -46,7 +45,6 @@ class Comments extends Component {
   };
 
   render() {
-    // console.log(this.state.comments, "Render");
     return (
       <Div className="comment-section">
         {/* Loop through multiple comments */}

@@ -24,7 +24,6 @@ export default class MainPage extends Component {
   // TODO: Fetch article based on request instead of default to global
   componentDidMount() {
     // Invokes the fetchArticle method
-    // console.log(this.props, "props will mount");
     this.fetchArticles();
     // fetch(
     //   `https://conduit.productionready.io/api/articles?limit=10&offset=${this
@@ -61,7 +60,6 @@ export default class MainPage extends Component {
     let token = JSON.parse(localStorage.getItem("authToken"));
     // Get the toke from localStorage
     token = `Token ${token}`;
-    // console.log(tag, "Passed tag");
 
     // Checks that activeTab isn't one from your-feed or global feed
     const limit = this.state.limit;
@@ -127,6 +125,12 @@ export default class MainPage extends Component {
     }
   };
 
+  componentDidUpdate(prevProps) {
+    if(prevProps.user !== this.props.user) {
+      this.fetchArticles();
+    }
+  }
+
   /**
    * Updates the currentState with pressed button
    * @param {object}
@@ -159,7 +163,6 @@ export default class MainPage extends Component {
    */
   handleTab = (e, tab) => {
     const value = e.target.dataset.value;
-    // console.log(value, "Value");
     // Check if the state isn't already set same as requested
     if (tab && this.state.active !== tab) {
       this.setState(

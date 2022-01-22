@@ -16,7 +16,7 @@ function Pagination({ handleNavPage, currentPage, articlesCount }) {
             onClick={handleNavPage}
             key={index}
             className={
-              currentPage === index ? "pag-item-btn active" : "pag-item-btn"
+              currentPage === (index + 1) || currentPage === index ? "pag-item-btn active" : "pag-item-btn"
             }
           >
             {index + 1}
