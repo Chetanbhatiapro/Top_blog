@@ -25,10 +25,6 @@ class Feed extends Component {
    * @return {undefined}
    */
   handleFavorite = (slug, favorited) => {
-    // TEmp
-    // console.log(slug, "Slug, HandleFavorite");
-    // console.log(favorited, "Favorited status");
-    // slug = "hello-world-article-vc7j70";
     let token = JSON.parse(localStorage.getItem("authToken"));
     // Get the toke from localStorage
     token = `Token ${token}`;
@@ -70,7 +66,6 @@ class Feed extends Component {
   render() {
     // Destructure the data and isLoading from props
     const { data, isLoading, getArticle } = this.props;
-    // console.log(getArticle, "Props getArticle");
 
     return (
       <>
