@@ -9,6 +9,7 @@ import Settings from "./components/Page/Settings";
 import ArticleEditor from "./components/Page/ArticleEditor";
 import Article from "./components/Page/Article";
 import Profile from "./components/Page/Profile";
+import api from "./api";
 
 // TODO: Please check with last route before commit ex: 404
 // Add context api or atleast Header component to pass props
@@ -187,7 +188,7 @@ class App extends React.Component {
    */
   fetchUser = token => {
     token = `Token ${token}`;
-    fetch("https://conduit.productionready.io/api/user", {
+    fetch(`${api}/user`, {
       headers: {
         Authorization: token
       }

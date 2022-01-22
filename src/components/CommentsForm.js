@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { withRouter as Router } from "react-router-dom";
+import user_avatar from "../assets/image/user_avatar.png"
 import "../App.scss";
 import styled from "styled-components";
+import api from "../api";
 
 class CommentsForm extends Component {
   constructor(props) {
@@ -18,14 +20,12 @@ class CommentsForm extends Component {
     });
   };
 
-  // https://conduit.productionready.io/api/articles/1-9g9bye/comments
   postComment = slug => {
-    // console.log(slug, "Slug from postComment");
     let token = JSON.parse(localStorage.authToken);
 
     token = `Token ${token}`;
 
-    fetch(`https://conduit.productionready.io/api/articles/${slug}/comments`, {
+    fetch(`${api}/articles/${slug}/comments`, {
       method: "POST",
       body: JSON.stringify({ comment: { body: this.state.body } }),
       headers: {
@@ -34,8 +34,7 @@ class CommentsForm extends Component {
       }
     })
       .then(res => res.json())
-      .then(res => {
-        // console.log(res, "Comment success");
+      .then(() => {
         const slug = this.props.match.params.slug;
         this.setState({ body: "" }, () =>
           this.props.history.push(`/article/${slug}`)
@@ -45,6 +44,7 @@ class CommentsForm extends Component {
   };
 
   render() {
+    const authorImage = this.props.authorImage;
     return (
       <Div className="comment-form-section">
         <div className="form-container">
@@ -60,10 +60,9 @@ class CommentsForm extends Component {
           </form>
           <div className="form-footer">
             <div className="form-image-container">
-              {/* TODO: add dynamic login user image if available */}
               <img
-                src="https://avatoon.net/wp-content/uploads/2018/06/Avatoon-Blog-Cartoon-Avatar.jpg"
-                alt=""
+                src={authorImage || user_avatar}
+                alt="user avatar"
                 className="form-user-pro-image"
               />
             </div>
@@ -71,7 +70,7 @@ class CommentsForm extends Component {
               <button
                 onClick={() =>
                   localStorage.authToken
-                    ? this.postComment(this.props.data)
+                    ? this.postComment(this.props.slug)
                     : alert("Please log in first to comment")
                 }
                 className="btn-submit"
@@ -89,7 +88,6 @@ class CommentsForm extends Component {
 export default Router(CommentsForm);
 
 const Div = styled.div`
-  // background-color: orange;
   .form-container {
     max-width: 700px;
     width: 100%;
@@ -97,7 +95,6 @@ const Div = styled.div`
     padding: 0 1rem;
   }
   .form {
-    // width: 670px;
     width: 100%;
   }
   .input {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter as Router } from "react-router-dom";
+import api from "../api.js";
 import Loader from "./Loader.js";
 
 class Feed extends Component {
@@ -35,7 +36,7 @@ class Feed extends Component {
     // Checks that article is already favorited by the user or not
     if (!favorited) {
       fetch(
-        `https://conduit.productionready.io/api/articles/${slug}/favorite`,
+        `${api}/articles/${slug}/favorite`,
         {
           method: "POST",
           headers: {
@@ -48,7 +49,7 @@ class Feed extends Component {
         .catch(err => console.error(err));
     } else {
       fetch(
-        `https://conduit.productionready.io/api/articles/${slug}/favorite`,
+        `${api}/articles/${slug}/favorite`,
         {
           method: "DELETE",
           headers: {

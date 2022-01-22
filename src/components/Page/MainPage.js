@@ -6,6 +6,7 @@ import Header from "../Header/Header";
 import Feed from "./../Feed";
 import Tags from "./../Tags";
 import Pagination from "./../Pagination";
+import api from "../../api";
 
 export default class MainPage extends Component {
   constructor(props) {
@@ -72,7 +73,7 @@ export default class MainPage extends Component {
       // Check if user is logged in
       if (this.props.user) {
         fetch(
-          `https://conduit.productionready.io/api/articles?tag=${tag}&limit=${limit}&offset=${offset}`,
+          `${api}/articles?tag=${tag}&limit=${limit}&offset=${offset}`,
           {
             headers: {
               Authorization: token
@@ -84,7 +85,7 @@ export default class MainPage extends Component {
       } else {
         // Runs if there is no user
         fetch(
-          `https://conduit.productionready.io/api/articles?tag=${tag}&limit=${limit}&offset=${offset}`
+          `${api}/articles?tag=${tag}&limit=${limit}&offset=${offset}`
         )
           .then(res => res.json())
           .then(data => this.setState({ data, isLoading: false }));
@@ -93,7 +94,7 @@ export default class MainPage extends Component {
     // Check if activeTab is your-feed
     else if (this.state.activeTab === "your-feed") {
       fetch(
-        `https://conduit.productionready.io/api/articles/feed?limit=${limit}&offset=${offset}`,
+        `${api}/articles/feed?limit=${limit}&offset=${offset}`,
         {
           headers: {
             Authorization: token
@@ -106,7 +107,7 @@ export default class MainPage extends Component {
     // Check if your acitveTab has global-feed and user is logged in
     else if (this.state.activeTab === "global-feed" && this.props.user) {
       fetch(
-        `https://conduit.productionready.io/api/articles?limit=${limit}&offset=${offset}`,
+        `${api}/articles?limit=${limit}&offset=${offset}`,
         {
           headers: {
             Authorization: token
@@ -119,7 +120,7 @@ export default class MainPage extends Component {
     // Runs if there's no user logged in and acitveTab is your-tab
     else {
       fetch(
-        `https://conduit.productionready.io/api/articles?limit=${limit}&offset=${offset}`
+        `${api}/articles?limit=${limit}&offset=${offset}`
       )
         .then(res => res.json())
         .then(data => this.setState({ data, isLoading: false }));

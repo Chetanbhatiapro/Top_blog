@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Link, withRouter as Router } from "react-router-dom";
+import user_avatar from "../assets/image/user_avatar.png"
 import "../App.scss";
 import styled from "styled-components";
+import api from "../api";
 
 class Comments extends Component {
   constructor(props) {
@@ -17,7 +19,7 @@ class Comments extends Component {
   }
 
   fetchComments = slug => {
-    fetch(`https://conduit.productionready.io/api/articles/${slug}/comments`)
+    fetch(`${api}/articles/${slug}/comments`)
       .then(res => res.json())
       .then(comments => {
         this.setState({ comments });
@@ -31,7 +33,7 @@ class Comments extends Component {
     // Refactor token
     token = `Token ${token}`;
     fetch(
-      `https://conduit.productionready.io/api/articles/${slug}/comments/${id}`,
+      `${api}/articles/${slug}/comments/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -62,7 +64,7 @@ class Comments extends Component {
                         src={
                           comment.author.image
                             ? comment.author.image
-                            : "https://avatoon.net/wp-content/uploads/2018/06/Avatoon-Blog-Cartoon-Avatar.jpg"
+                            : user_avatar
                         }
                         alt="profile"
                         className="comment-image"

@@ -3,6 +3,7 @@ import '../../App.scss';
 import { Link, withRouter as Router } from 'react-router-dom';
 import Header from '../Header/Header';
 import styled from 'styled-components';
+import api from '../../api';
 
 class Register extends Component {
     constructor() {
@@ -25,7 +26,7 @@ class Register extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch('https://conduit.productionready.io/api/users', {
+        fetch(`${api}/users`, {
             method: 'POST',
             body: JSON.stringify({'user': this.state}),
             headers: {

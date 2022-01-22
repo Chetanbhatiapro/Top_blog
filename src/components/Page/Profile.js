@@ -5,6 +5,7 @@ import Header from "./../Header/Header";
 import "../../App.scss";
 import styled from "styled-components";
 import Feed from "../Feed";
+import api from "../../api";
 
 class Profile extends Component {
   constructor(props) {
@@ -78,10 +79,10 @@ class Profile extends Component {
     let url = null;
     if (this.state.active === "my-articles") {
       // console.log('Url 1st')
-      url = `https://conduit.productionready.io/api/articles?author=${username}&limit=5&offset=0`;
+      url = `${api}/articles?author=${username}&limit=5&offset=0`;
     } else {
       // console.log('Url 2nd')
-      url = `https://conduit.productionready.io/api/articles?favorited=${username}&limit=5&offset=0`;
+      url = `${api}/articles?favorited=${username}&limit=5&offset=0`;
     }
 
     //
@@ -130,7 +131,7 @@ class Profile extends Component {
     // console.log(username, "Username from function");
     // TEmp
     // slug = "hello-world-article-vc7j70";
-    fetch(`https://conduit.productionready.io/api/profiles/${username}`)
+    fetch(`${api}/profiles/${username}`)
       .then(res => res.json())
       .then(user => {
         // token = token.split(' ')[1];

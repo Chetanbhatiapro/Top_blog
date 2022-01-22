@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, withRouter as Router } from "react-router-dom";
+import user_avatar from "../../assets/image/user_avatar.png"
 import Header from "./../Header/Header";
 import CommentsForm from "./../CommentsForm";
 import Comments from "./../Comments";
 import "../../App.scss";
 import styled from "styled-components";
+import api from "../../api";
 
 class Article extends React.Component {
   state = {
@@ -22,22 +24,12 @@ class Article extends React.Component {
    * @return {undefined}
    */
   getArticle = slug => {
-    // console.log(slug, "This is a slug");
-    // TEmp
-    // slug = "hello-world-article-vc7j70";
-    fetch(`https://conduit.productionready.io/api/articles/${slug}`, {
-      // headers: {
-      //   Authorization: token
-      // }
-    })
+    fetch(`${api}/articles/${slug}`)
       .then(res => res.json())
       .then(article => {
-        // token = token.split(' ')[1];
-        // localStorage.setItem('authToken', JSON.stringify(token));
         this.setState({
           article: article.article
         });
-        // , () => console.log(this.state.currentArticle, 'Current Article')
       })
       .catch(err => console.error(err));
   };
@@ -52,19 +44,18 @@ class Article extends React.Component {
     let token = JSON.parse(localStorage.authToken);
     // Refactor token
     token = `Token ${token}`;
-    fetch(`https://conduit.productionready.io/api/articles/${slug}`, {
+    fetch(`${api}/articles/${slug}`, {
       method: "DELETE",
       headers: {
         authorization: token
       }
     })
-      .then(res => this.history.push("/"))
+      .then(() => this.props.history.push("/"))
       .catch(err => console.log(err));
   };
 
   render() {
     const { user, editArticle } = this.props;
-    // console.log(user && user.user.username, "user");
 
     return (
       <>
@@ -96,12 +87,12 @@ class Article extends React.Component {
                             to={`/profile/${this.state.article &&
                               this.state.article.author.username}`}
                           >
-                            {/* TODO: Add dynamic image */}
+
                             <img
                               src={
                                 this.state.article
                                   ? this.state.article.author.image
-                                  : "https://avatoon.net/wp-content/uploads/2018/06/Avatoon-Blog-Cartoon-Avatar.jpg"
+                                  : user_avatar
                               }
                               alt=""
                               className="article-pro-image"
@@ -145,8 +136,10 @@ class Article extends React.Component {
                               Edit Article
                             </button>
                             <button
-                              onClick={() =>
-                                this.deleteArticle(this.state.articleslug)
+                              onClick={() => {
+                                const slug = this.state.article ? this.state.article.slug : '';
+                                this.deleteArticle(slug)
+                                }
                               }
                               className="article-btn btn-delete"
                             >
@@ -168,7 +161,8 @@ class Article extends React.Component {
                 </p>
                 {/* Comments form */}
                 <CommentsForm
-                  data={this.state.article && this.state.article.slug}
+                  slug={this.state.article && this.state.article.slug}
+                  authorImage={this.state.article && this.state.article.author.image}
                 />
                 {/* Comment */}
                 <Comments

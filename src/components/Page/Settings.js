@@ -3,6 +3,7 @@ import "../../App.scss";
 import styled from "styled-components";
 import Header from "../Header/Header";
 import { withRouter as Router } from "react-router-dom";
+import api from "../../api";
 
 class Settings extends React.Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class Settings extends React.Component {
     }
 
     // Fetch the update user request
-    fetch("https://conduit.productionready.io/api/user", {
+    fetch(`${api}/user`, {
       method: "PUT",
       body: JSON.stringify({ user: user }),
       headers: {

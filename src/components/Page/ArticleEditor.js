@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "../Header/Header";
 import styled from "styled-components";
 import { withRouter as Router } from "react-router-dom";
+import api from "../../api";
 
 class ArticleEditor extends Component {
   constructor(props) {
@@ -29,7 +30,7 @@ class ArticleEditor extends Component {
    * @return {undefined}
    */
      getArticle = slug => {
-      fetch(`https://conduit.productionready.io/api/articles/${slug}`, {
+      fetch(`${api}/articles/${slug}`, {
       })
         .then(res => res.json())
         .then(data => {
@@ -89,11 +90,11 @@ class ArticleEditor extends Component {
 
     // Define the url and currentMethod
     let currentMethod = "POST";
-    let url = "https://conduit.productionready.io/api/articles";
+    let url = `${api}/articles`;
 
     // Change url and null based on condition
     if (this.state.isEdit) {
-      url = `https://conduit.productionready.io/api/articles/${this.state.slug}`;
+      url = `${api}/articles/${this.state.slug}`;
       currentMethod = "PUT";
     }
 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import api from "../api.js";
 import Loader from "./Loader.js";
 
 export default class GlobalFeed extends Component {
@@ -12,7 +13,7 @@ export default class GlobalFeed extends Component {
   }
 
   componentDidMount() {
-    fetch("https://conduit.productionready.io/api/tags")
+    fetch(`${api}/tags`)
       .then(res => res.json())
       .then(data => this.setState({ data, isLoading: false }));
   }
