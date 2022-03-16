@@ -17,79 +17,91 @@ export default function Header({ username, handlelogOut }) {
           </Link>
         </div>
         <div className="nav-list-container">
-          <ul className="nav-list-container">
-            <li className="list-item-links">
-              {username ? (
-                <>
-                  <NavLink
-                    activeClassName={"active"}
-                    className="link-item"
-                    exact
-                    to="/"
-                  >
-                    Home
-                  </NavLink>
-                  {/* Conditional */}
-                  <NavLink
-                    activeClassName="active"
-                    className="link-item"
-                    exact
-                    to="/article/create"
-                  >
-                    New Post
-                  </NavLink>
-                  <NavLink
-                    activeClassName="active"
-                    className="link-item"
-                    exact
-                    to="/settings"
-                  >
-                    Settings
-                  </NavLink>
-                  <NavLink
-                    activeClassName="active"
-                    className="link-item"
-                    exact
-                    to={profileUrl}
-                  >
-                    {/* {username} */}
-                    Profile
-                  </NavLink>
-                  <button onClick={handlelogOut} className="link-item btn-item">
-                    Log out
-                  </button>
-                </>
-              ) : (
-                <>
-                  <NavLink
-                    activeClassName={"active"}
-                    className="link-item"
-                    exact
-                    to="/"
-                  >
-                    Home
-                  </NavLink>
-                  {/*  */}
-                  <NavLink
-                    activeClassName="active"
-                    className="link-item"
-                    exact
-                    to="/login"
-                  >
-                    Sign in
-                  </NavLink>
-                  <NavLink
-                    activeClassName="active"
-                    className="link-item"
-                    exact
-                    to="/register"
-                  >
-                    Sign up
-                  </NavLink>
-                </>
-              )}
-            </li>
-          </ul>
+          {/* <li className="list-item-links"> */}
+          {username ? (
+            <ul className="nav-list-container">
+              <nav>
+                <NavLink
+                  activeClassName={"active"}
+                  className="link-item"
+                  exact
+                  to="/"
+                >
+                  Home
+                </NavLink>
+              </nav>
+              <nav>
+
+                <NavLink
+                  activeClassName="active"
+                  className="link-item"
+                  exact
+                  to="/article/create"
+                >
+                  New Post
+                </NavLink>
+              </nav>
+              <nav>
+                <NavLink
+                  activeClassName="active"
+                  className="link-item"
+                  exact
+                  to="/settings"
+                >
+                  Settings
+                </NavLink>
+              </nav>
+              <nav>
+                <NavLink
+                  activeClassName="active"
+                  className="link-item"
+                  exact
+                  to={profileUrl}
+                >
+                  {/* {username} */}
+                  Profile
+                </NavLink>
+              </nav>
+              <nav>
+                <button onClick={handlelogOut} className="link-item btn-item">
+                  Log out
+                </button>
+              </nav>
+            </ul>
+          ) : (
+            <ul className="nav-list-container">
+              <nav>
+                <NavLink
+                  activeClassName={"active"}
+                  className="link-item"
+                  exact
+                  to="/"
+                >
+                  Home
+                </NavLink>
+              </nav>
+              <nav>
+                <NavLink
+                  activeClassName="active"
+                  className="link-item"
+                  exact
+                  to="/login"
+                >
+                  Sign in
+                </NavLink>
+              </nav>
+              <nav>
+                <NavLink
+                  activeClassName="active"
+                  className="link-item"
+                  exact
+                  to="/register"
+                >
+                  Sign up
+                </NavLink>
+              </nav>
+            </ul>
+          )}
         </div>
       </Nav>
     </header>
