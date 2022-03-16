@@ -267,6 +267,16 @@ $font-family: "Source Sans Pro", sans-serif;
 
 .nav-list-container {
   margin: 0.1rem 0.51rem;
+  display: flex;
+  column-gap: 20px;
+
+  @media screen and (max-width: 1201px) {
+    column-gap: 15px;
+  }
+
+  @media screen and (max-width: 1024px) {
+    column-gap: 12px;
+  }
 }
 
 .nav-link-heading {
@@ -287,7 +297,6 @@ $font-family: "Source Sans Pro", sans-serif;
 .link-item {
   font-size: 0.9rem;
   color: $lightGray;
-  margin: 0.6rem 0.4rem;
   &:hover {
     color: $black;
     text-decoration: none;
@@ -362,15 +371,39 @@ $font-family: "Source Sans Pro", sans-serif;
       font-size: 1.18rem;
     }
   }
+  .action-container {
+    margin-top: 0.6rem;
+    display: flex;
+    column-gap: 15px;
+  }
+
+  .submit-btn-container {
+    text-align: center;
+    background-color: $primaryColor;
+    color: $white;
+    height: 49px;
+    width: 143px; 
+    border-radius: 5px;
+    &:hover {
+      background-color: $primaryLightDark;
+
+      .submit-btn {
+        background-color: $primaryLightDark;
+      }
+    }
+  }
+  .submit-btn-spinner {
+    background-color: $primaryColor;
+    color: $white;
+  }
   .submit-btn {
     background-color: $primaryColor;
     color: $white;
     border: none;
-    padding: 0.8rem 1.8rem;
-    border-radius: 5px;
     margin-top: 0.6rem;
-    &:hover {
-      background-color: $primaryLightDark;
+    &:focus {
+      border: none;
+      outline: none;
     }
   }
 }
