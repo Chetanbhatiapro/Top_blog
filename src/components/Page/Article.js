@@ -7,6 +7,7 @@ import Comments from "./../Comments";
 import "../../App.scss";
 import styled from "styled-components";
 import api from "../../api";
+import { getFormatedDateTime } from "../../utils";
 
 class Article extends React.Component {
   state = {
@@ -113,7 +114,7 @@ class Article extends React.Component {
                           </Link>
                           <span className="article-publish-info">
                             {/* Add article publish date and tiem */}
-                            {this.state.article ? new Date(this.state.article.createdAt).toUTCString() : null}
+                            {this.state.article ? getFormatedDateTime(this.state.article.createdAt) : null}
                           </span>
                         </div>
                       </div>
@@ -217,7 +218,7 @@ const Div = styled.div`
   }
   // Author and publish date
   .article-basic-info-cont {
-    margin-left: .4rem;
+    margin-left: 1.2rem;
   }
   .article-author-link {
     color: white;
@@ -233,7 +234,7 @@ const Div = styled.div`
   }
 
   .article-option-container {
-    margin-bottom: 10px;
+    margin-bottom: 30px;
   }
   // Buttons
   .article-btn {
@@ -245,6 +246,7 @@ const Div = styled.div`
     border: 1px solid white;
     border-radius: 5px;
     margin: 0 .05rem;
+    margin-right: 10px;
     .icon-cont {
       margin-right: .2rem;
     }

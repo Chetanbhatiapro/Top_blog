@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, withRouter as Router } from "react-router-dom";
 import api from "../api.js";
+import { getFormatedDateTime } from "../utils.js";
 import Loader from "./Loader.js";
 
 class Feed extends Component {
@@ -71,7 +72,9 @@ class Feed extends Component {
       <>
         {data &&
           data.articles.map(
-            (article, index) => (
+            (article, index) => {
+              const publishDate = getFormatedDateTime(article.createdAt)
+            return (
               // {/* Article preview card container */}
               <div key={index} className="art-pre-card-cont">
                 {/* First top container */}
@@ -109,7 +112,7 @@ class Feed extends Component {
                       >
                         {article.author.username}
                       </Link>
-                      <span className="date-text">{article.createdAt}</span>
+                      <span className="date-text">{publishDate}</span>
                     </div>
                   </div>
                   {/* Like button */}
@@ -176,7 +179,7 @@ class Feed extends Component {
                   </div>
                 </div>
               </div>
-            )
+            )}
             // End of the card
           )}
         {isLoading && (
