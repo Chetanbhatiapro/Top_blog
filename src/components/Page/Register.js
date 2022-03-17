@@ -12,7 +12,8 @@ class Register extends Component {
             username: '',
             email: '',
             password: '',
-            isError: false
+            isError: false,
+            isLoading: false,
         }
     }
 
@@ -26,29 +27,35 @@ class Register extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
 
-        fetch(`${api}/users`, {
-            method: 'POST',
-            body: JSON.stringify({'user': this.state}),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(res => {
-            if (res.ok) {
-                // Redirect the user to home page
-                return res.json();
-            }
-            else {
-                // Change the state to true for error
-                this.setState({isError: true})
-                throw new Error('There is an error')
-            }
-        })
-        .then(res => {
-            this.props.fetchUser(res.user.token);
-            this.props.history.push('/')
-        })
-        .catch(error => console.dir(error))                                     
+        if(!this.state.username || !this.state.email || !this.state.password) return;
+
+        this.setState((prevState) => ({ ...prevState, isLoading: true }), () => {
+            fetch(`${api}/users`, {
+                method: 'POST',
+                body: JSON.stringify({'user': this.state}),
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+            .then(res => {
+                if (res.ok) {
+                    // Redirect the user to home page
+                    return res.json();
+                }
+                else {
+                    // Change the state to true for error
+                    this.setState({isError: true})
+                    // throw new Error('There is an error')
+                }
+            })
+            .then(res => {
+                this.props.fetchUser(res.user.token);
+                this.props.history.push('/')
+            })
+            // .catch(error => console.dir(error))
+
+            this.setState((prevState) => ({ ...prevState, isLoading: false }));
+        });
     }
 
   render() {
@@ -64,12 +71,12 @@ class Register extends Component {
                     {/* IF error is true */}
                     {this.state.isError && 
                         <div className='error-container'>
-                            <Span className="error-text">email or username is already taken</Span>
+                            <Span className="error-text">Something is wrong</Span>
                         </div>
                     }
                     <div className="form-container">
                       {/* Todo: update the url */}
-                        <form className="form">
+                        <form className="form" onSubmit={this.handleSubmit}>
                             <input 
                                 type="text" 
                                 name="username" 
@@ -91,7 +98,17 @@ class Register extends Component {
                                 placeholder="Password"
                                 onChange={this.handleInput}
                             />
-                            <button className="submit-btn" onClick={this.handleSubmit}>Sign in</button>
+                             <div className='action-container'>
+                                    <div className="submit-btn-container">
+                                        {this.state.isLoading ?
+                                            <div className="spinner-border submit-btn-spinner" role="status">
+                                                <span className="sr-only">Loading...</span>
+                                            </div>
+                                            :
+                                            <button className="submit-btn">Sign up</button>
+                                        }
+                                    </div>
+                                </div>
                         </form>
                     </div>
                 </div>
