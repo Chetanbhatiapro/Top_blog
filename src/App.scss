@@ -382,12 +382,14 @@ $font-family: "Source Sans Pro", sans-serif;
   }
 
   .submit-btn-container {
-    text-align: center;
     background-color: $primaryColor;
     color: $white;
     height: 49px;
     width: 143px; 
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     &:hover {
       background-color: $primaryLightDark;
 
@@ -404,7 +406,6 @@ $font-family: "Source Sans Pro", sans-serif;
     background-color: $primaryColor;
     color: $white;
     border: none;
-    margin-top: 0.6rem;
     &:focus {
       border: none;
       outline: none;
